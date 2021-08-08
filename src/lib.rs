@@ -1,4 +1,20 @@
 #![doc = include_str!("../README.md")]
+#![no_std]
+
+// We always pull in `std` during tests, because it's just easier
+// to write tests when you can assume you're on a capable platform
+#[cfg(any(feature = "std", test))]
+#[macro_use]
+extern crate std;
+
+#[cfg(any(feature = "alloc", test))]
+extern crate alloc;
+
+// When we're building for a no-std target, we pull in `core`, but alias
+// it as `std` so the `use` statements are the same between `std` and `core`.
+#[cfg(all(not(feature = "std"), not(test)))]
+#[macro_use]
+extern crate core as std;
 
 /// Contains all thirteen strings.
 pub mod thirteen_strings;
@@ -81,7 +97,8 @@ fn is_thirteen_equal_chars(s: &str) -> bool {
     }
 }
 
-impl IsThirteen for String {
+#[cfg(any(feature = "alloc", feature="std", test))]
+impl IsThirteen for alloc::string::String {
     fn thirteen(&self) -> bool {
         self.as_str().thirteen()
     }

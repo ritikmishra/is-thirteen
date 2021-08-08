@@ -3,6 +3,7 @@ use chrono::Datelike;
 use chrono::TimeZone;
 use chrono::Utc;
 use rstest::rstest;
+use std::string::ToString;
 
 #[rstest]
 // Tests from the is-thirteen suite

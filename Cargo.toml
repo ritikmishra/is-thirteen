@@ -8,6 +8,12 @@ documentation = "https://docs.rs/is-thirteen/"
 repository = "https://github.com/MakotoE/is-thirteen"
 readme = "README.md"
 
+[features]
+# enable support for the standard library
+std = ["alloc"]
+# enable features that assume heap allocation
+alloc = []
+
 [dependencies]
 phf = { version = "0.9", features = ["macros"] }
 fnv = "1.0"
@@ -20,3 +26,9 @@ chrono = "0.4"
 
 [[bin]]
 name = "is-thirteen"
+required-features = ["std"]
+
+[[test]]
+name = "lib_test"
+path = "src/lib_test.rs"
+required-features = ["std"]
